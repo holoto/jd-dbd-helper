@@ -1,0 +1,55 @@
+{
+  "background": {
+    "scripts": ["./background.js"],
+        "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "./popup.html"
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": ["./contentScripts.js"],
+      "matches": [
+        "http://paipai.jd.com/auction-list/*",
+        "https://paipai.jd.com/auction-list/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "description": "京东夺宝岛监控助手",
+  "icons": {
+    "16": "assets/icons/icon_16.png",
+    "32": "assets/icons/icon_32.png",
+    "64": "assets/icons/icon_64.png",
+    "128": "assets/icons/icon_128.png"
+  },
+  "manifest_version": 2,
+  "name": "京东夺宝岛监控助手",
+  "options_ui": {
+    "chrome_style": true,
+    "page": "./options.html"
+  },
+  "permissions": [
+    "declarativeContent",
+    // "webRequest",
+
+
+    "http://*",
+    "https://*",
+    "https://*.360buyimg.com/*",
+    "http://*.360buyimg.com/*",
+    "cookie",
+    "activeTab",
+    "background",
+    "storage",
+    "tabs",
+    "notifications",
+        // "http:///","https:///",
+
+    "downloads"
+
+  ],
+  "version": "1.0.0",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
