@@ -4,7 +4,6 @@ const fg = require('fast-glob')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ChromeExtensionReloader = require('webpack-chrome-extension-reloader')
-// const ChromeReloadPlugin = require('wcer')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
@@ -20,7 +19,9 @@ const config = {
     options: './options/index.js',
     popup: './popup/index.js',
     background: './background/index.js',
-    contentScripts: './contentScripts/index.js',
+    // contentScripts: './contentScripts/index.js',
+    contentScripts: ['./contentScripts/index.js'],
+    page: ['./contentScripts/page.js']
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -89,17 +90,22 @@ const config = {
     // extensions: ['.js'],
   },
   plugins: [
-    // new ChromeReloadPlugin({
-    //   port: 9090,
-    //   manifest: path.join(rootDir, 'src', 'manifest.js')
-    // }),
 
     new VueLoaderPlugin(),
+new CleanWebpackPlugin({
+      // dry: true,
+    cleanStaleWebpackAssets: false,
+    // default: [''],
+    // cleanOnceBeforeBuildPatterns: ['**/*', '!manifest*.json'],
+      // cleanOnceBeforeBuildPatterns: [], // disables cleanOnceBeforeBuildPatterns
 
-    new CleanWebpackPlugin(['./dist/', './dist-zip/']),
+        // cleanAfterEveryBuildPatterns: ['!manifest.json','!icon_*.png']
+
+}),
     new CopyWebpackPlugin([
       { from: 'assets', to: 'assets' },
-      { from: 'manifest.json', to: 'manifest.json', flatten: true },
+      { from: 'manifest.json', to: 'manifest.json', flatten: true }
+
     ]),
     new HtmlWebpackPlugin({
       title: 'Options',
@@ -113,21 +119,7 @@ const config = {
       filename: 'popup.html',
       chunks: ['popup'],
     }),
-            new webpack.HotModuleReplacementPlugin(),
-  new ChromeExtensionReloader({
-
-        reloadPage: true, // Force the reload of the page also
-      entries: {
-        background: 'background',
-        // options: 'options',
-        // popup: 'popup',
-        contentScripts: 'contentScripts/index'
-                // manifest: path.join(__dirname, '..', 'src', 'manifest.js')
-
-      },
-    })
-
-  ]
+  ],
 }
 
 /**
@@ -135,15 +127,26 @@ const config = {
  */
 if (isDevMode) {
   config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
 
 
-
-
-
+    new ChromeExtensionReloader({
+              port: 9090, // Which port use to create the server
+      reloadPage: true, // Force the reload of the page also
+      entries: {
+        background: 'background',
+        options: 'options',
+        popup: 'popup',
+        contentScripts: ['contentScripts/index'],
+        page: ['contentScripts/page']
+        // contentScripts: 'contentScripts/index',
+      },
+    }),
 
   )
 } else {
   config.plugins.push(
+
     new ScriptExtHtmlWebpackPlugin({
       async: [/runtime/],
       defaultAttribute: 'defer',

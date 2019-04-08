@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 // const axios = require('axios');
 // console.log(chrome)
 // console.log(window)
@@ -8,57 +9,74 @@
 
 
 
-var notificationtime;
-var taburl;
-var clearnotion=(id)=>{
-  chrome.notificationtime.clear(id)
+let notificationtime;
+let taburl;
+const clearnotion = (id) => {
+    chrome.notificationtime.clear(id)
 }
-var clicknot=()=>{
-  chrome.notifications.onClicked.addListener((id)=>{
-    console.log("clicknot")
-    console.log(id)
+const clicknot = () => {
+    chrome.notifications.onClicked.addListener((id) => {
+        // console.log("clicknot")
+        // console.log(id)
 
-    opentab(id)
-      chrome.notificationtime.clear(id)
+        chrome.notifications.clear(id)
+        setTimeout(() => {
+            opentab(id)
+        }, 300);
 
-  })
+
+
+    })
+    chrome.notifications.onClosed.addListener((id, a) => {
+        // console.log(id)
+        // console.log(a)
+        chrome.notifications.clear(id)
+    })
+
 }
-var opentab=(url)=>{
-  chrome.tabs.create({
-    url:url
-  })
-  // clicktab(url);
+var opentab = (url) => {
+
+    chrome.tabs.create({
+        url
+    })
+
+    // clicktab(url);
 }
-var post=(url,skuname,img,lasts)=>{
+const post = (url, skuname, img, lasts) => {
+
     chrome.notifications.create(url, {
-  type: 'basic',
-  iconUrl:"assets/icons/icon_16.png",
-    // imageUrl: img,
-  title: '还有'+lasts+'s结束',
-      // buttons: [{title:'按钮1的标题'}],
-      // items:[{  title:'消息1',message: '今天天气真好！'}],
-  message: skuname,
-    eventTime: Date.now() + 2000
+        type: 'basic',
+        iconUrl: "assets/icons/Icon16.png",
+        // iconUrl: img,
+        title: `还有${lasts}s结束`,
+        // buttons: [{
+        //     title: '按钮1的标题',
+        //     iconUrl: 'assets/icons/Icon16.png'
+        // }],
+        // items:[{  title:'消息1',message: '今天天气真好！'}],
+        message: skuname,
+        eventTime: Date.now() + 2000
 
-},(id)=>{
-  console.log(id)
-// clicknot()
-})
+    }, (id) => {
+        console.log(id)
+            // clicknot()
+    })
+
+    // console.log(a)
 };
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse)=>
-{
-  console.log(request)
-  console.log(sender)
-// clicknot(request.url)
-// sendResponse(request)
-  if (request.action=="lasttime30s") {
-console.log(1)
-post(request.url,request.skuname,request.img,request.lasts);
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    // console.log(request)
+    // console.log(sender)
+    // clicknot(request.url)
+    // sendResponse(request)
+    if (request.action === "lasttime30s") {
+        // console.log(1)
 
-  }else(
-    console.log('else')
+        post(request.url, request.skuname, request.img, request.lasts);
+
+    } else(
+        console.log('else')
     )
 })
 clicknot()
-
