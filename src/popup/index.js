@@ -3,7 +3,9 @@ import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 Vue.use(Buefy)
 import App from './App.vue'
-import { Input } from 'buefy/dist/components/input'
+import {
+    Input
+} from 'buefy/dist/components/input'
 Vue.component('b-input', Input)
 
 // import ElementUI from 'element-ui'
@@ -18,7 +20,9 @@ Vue.component('b-input', Input)
 
 // eslint-disable-next-line
 new Vue({
-  el: "#app",
-
-  render: h => h(App)
+    el: "#app",
+    data: {
+        message: 2222
+    },
+    render: h => h(App)
 })

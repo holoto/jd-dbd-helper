@@ -1,6 +1,6 @@
 # 京东夺宝岛监控助手
 ## 安装插件
-点击 [下载链接](https://github.com/holoto/jd-dbd-helper/blob/master/dist-zip/vue-chrome-extension-boilerplate-v1.0.0.zip?raw=true)
+点击 [下载链接](https://github.com/holoto/jd-dbd-helper/blob/master/dist-zip/jddbdhelper-v1.0.0.zip?raw=true)
 
 
 解压
@@ -21,10 +21,13 @@ chrome浏览器 打开[chrome://extensions/](chrome://extensions/)进入 chrome 
 
 可以设置监控模式 一直刷新获取最新商品
 ## 使用详情截图
-![kOJruQ.png](https://s2.ax1x.com/2019/03/04/kOJruQ.png)
+![](https://ae01.alicdn.com/kf/HTB1oevYPYvpK1RjSZPi762mwXXa1.png)
+![](https://ae01.alicdn.com/kf/HTB12qDoP9zqK1RjSZPc762TepXa6.png)
+![](https://ae01.alicdn.com/kf/HTB1AWz3P7voK1RjSZFN763xMVXaV.png)
+
 
 ## 开发
-`npm i`
+`yarn`
 
 
 `npm run dev`
