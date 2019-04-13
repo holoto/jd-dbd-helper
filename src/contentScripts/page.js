@@ -59,15 +59,18 @@ let helperlooptime = 500;
 // console.log(localStorage.getItem('timejrrwg'))
 
 window.onload = () => {
-        // var port = chrome.runtime.connect({
-        //     name: "knockknock"
-        // });
-        // port.postMessage({
-        //     action: "getdbdlist"
-        // });
-        // port.onMessage.addListener((msg) => {
-        //     console.log(msg)
-        // });
+        const tabdefault = $('.detail-elevator li:nth-child(3)')[0]
+        const tabprice = $('.detail-elevator li:last-child')[0]
+        tabprice.click()
+            // var port = chrome.runtime.connect({
+            //     name: "knockknock"
+            // });
+            // port.postMessage({
+            //     action: "getdbdlist"
+            // });
+            // port.onMessage.addListener((msg) => {
+            //     console.log(msg)
+            // });
         const itemcategory = $('.crumb div:nth-child(3)')[0].innerHTML;
         // console.log(itemcategory)
         // console.log(chrome.storage.local)
@@ -80,10 +83,10 @@ window.onload = () => {
         if ($('.sprite-medal').length) {
             closetab()
         } else {
-            const tabdefault = $('.detail-elevator li:nth-child(3)')[0]
-            const tabprice = $('.detail-elevator li:last-child')[0]
-            tabprice.click()
 
+            // setTimeout(() => {
+            //     console.log($('.winner'))
+            // }, 2000);
             const priceshow = $('.price')[0]
             const pricediv = $('.p-choose-wrap')[0]
             var pricetext = document.createElement('div')
@@ -120,31 +123,35 @@ window.onload = () => {
             startbutton.onclick = e => {
                 e.stopPropagation();
                 if (!endtime) {
-                    getdbditem(itemid, itemcategory).then(res => {
-                        // localForage.getItem(itemid, (err11, value11) => {
-                        //   console.log(value11)
-                        //   console.log(err11)
-                        // });
+                    getdbditem(itemid, itemcategory).then(res1 => {
+                        setTimeout(() => {
+                            getlocaldata({
+                                mydata1: null
+                            }).then(res => {
+                                console.log(res)
+                                if (res.mydata1.id == itemid) {
+                                    endtime = res.mydata1.endTime;
+                                    startevent()
+                                    console.log(res.mydata1);
+                                } else {
+                                    pricetext.innerHTML = "出错了   重新点击"
+                                }
 
-                        getlocaldata({
-                            mydata1: null
-                        }).then(res => {
+                            })
+                        }, 3000);
 
-                            if (res.mydata1.id == itemid) {
-                                endtime = res.mydata1.endTime;
-                                console.log(res.mydata1);
-                            }
-
-                        })
                     });
 
+                } else {
+                    startevent()
+
                 }
-                startevent()
+
 
             }
             const startevent = () => {
 
-
+                itemprice = $('.el-input__inner')[0]._value;
                 clearInterval(helper)
                 helper = null;
                 helper = setInterval(() => {
@@ -153,7 +160,7 @@ window.onload = () => {
                     setTimeout(() => {
                         setpricehelper()
 
-                    }, 2000);
+                    }, 100);
 
                 }, helperlooptime);
                 pricetext.innerHTML = "当前正在监听 可点击停止按钮停止监听"
@@ -183,7 +190,7 @@ window.onload = () => {
 
 
                     nowtime = new Date().getTime();
-                    // console.log(endtime - nowtime);
+                    console.log(endtime - nowtime);
                     if (endtime - nowtime > 11000) {
                         helperlooptime = 8000
                         startevent()
@@ -198,7 +205,7 @@ window.onload = () => {
 
                     // console.log(helperlooptime)
                     // console.log($('.winner:first-child td+td')[0])
-                    itemprice = $('.el-input__inner')[0]._value;
+
                     // if (
                     //     Math.floor($('.winner:first-child td+td')[0].innerText.slice(1)) >
                     //     maxprice ||
@@ -216,9 +223,9 @@ window.onload = () => {
                     }
                     // console.log(Math.floor($('.winner:first-child td+td')[0].innerText.slice(1)))
                     // console.log(Math.floor($('#J-count-down > i:nth-child(5)')[0].innerText))
-                    let a1 = Math.floor($('.winner:first-child td+td')[0].innerText.slice(1)) < itemprice
-                        // let a2 = Math.floor($('#J-count-down > i:nth-child(3)')[0].innerText) === 0
-                        // let a3 = Math.floor($('#J-count-down > i:nth-child(5)')[0].innerText) < 3
+                    // let a1 = Math.floor($('.winner:first-child td+td')[0].innerText.slice(1)) < itemprice
+                    // let a2 = Math.floor($('#J-count-down > i:nth-child(3)')[0].innerText) === 0
+                    // let a3 = Math.floor($('#J-count-down > i:nth-child(5)')[0].innerText) < 3
                     let a4 = Math.floor($('.el-input__inner')[0]._value) <= itemprice
                     let a5 = Math.floor($('.el-input__inner')[0]._value) <= maxprice
 
