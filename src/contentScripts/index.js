@@ -6,7 +6,8 @@ import "@babel/polyfill";
 import {
     notificationstime,
     getdbdlist,
-    getdbditem
+    getdbditem,
+    mydbddata
 } from './com'
 getdbditem()
 var dbdlist;
@@ -37,6 +38,9 @@ chrome.storage.sync.get({
 });
 getdbdlist()
 window.onload = () => {
+    // console.log($('.current'))
+    // console.log($('.sl-v-list'))
+    // console.log($('.sl-v-list li:last-child'))
     // console.log($('.p-price'))
     // console.log($('.p-time b:first-child'))
     // console.log($('.p-time b:nth-child(2)'))
@@ -50,14 +54,15 @@ window.onload = () => {
     // console.log($('.current'))
     // console.log($('.sl-v-list li:last-child'))
 
-    let dbdnow = $('.current')[0]
-    let dbdlate = $('.sl-v-list li:last-child')[0]
+    let dbdnow = $('.db-state div:nth-child(3)')[0]
+    let dbdlate = $('.db-state div:nth-child(5)')[0]
+    console.log(dbdnow)
+    console.log(dbdlate)
     const reflashdata = () => {
-        dbdnow = $('.current')[0]
+        // dbdnow = $('.current')[1]
         dbdlate.click();
         // $('.sl-v-list li:last-child')[0].click()
-        // console.log(dbdnow)
-        // console.log(dbdlate)
+
         setTimeout(() => {
             // $('.current')[0].click()
 
@@ -65,7 +70,8 @@ window.onload = () => {
             dbdnow.click()
 
 
-        }, 100)
+        }, 230)
+
     }
     const bindlist = () => {
         // watchlist=$('.p-name');
@@ -168,12 +174,12 @@ window.onload = () => {
     navbar.style.left = "0px";
     navbar.style.height = "700px";
     navbar.style.width = "350px"
-    navbar.style.zIndex = 0;
+    navbar.style.zIndex = 1;
     navbar.style.backgroundColor = "#8BB59C";
     flashpagedata.style.backgroundColor = "#3EAFFF";
     flashpagedata.style.top = "600px";
     flashpagedata.innerHTML = "刷新页面"
-    flashpagedata.style.zIndex = 0;
+    flashpagedata.style.zIndex = 1;
     flashpagedata.style.position = "fixed";
     flashpagedata.style.left = "50px"
     flashpagedata.style.width = "50px"

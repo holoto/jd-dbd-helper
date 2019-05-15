@@ -39,7 +39,7 @@ const itemid = window.location.href.slice(37, 46);
 
 
 
-// console.log(itemid)
+console.log(itemid)
 let helper;
 let itemprice;
 let maxprice = 10000;
@@ -51,6 +51,7 @@ getlocaldata({
 })
 let flashpricetime = 600
 var endtime = 0;
+const stoptitle = "请手动输入监听价格 并点击开始监听按钮(3s后开始)"
 var nowtime = new Date().getTime()
     // console.log(typeof helper)
     // console.log( helper)
@@ -59,7 +60,10 @@ let helperlooptime = 500;
 // console.log(localStorage.getItem('timejrrwg'))
 
 window.onload = () => {
-        const tabdefault = $('.detail-elevator li:nth-child(3)')[0]
+
+        const tabdefault =  $('.detail-elevator li:nth-child(3)')[0]
+        // console.log(tabdefault)
+        // console.log(1)
         const tabprice = $('.detail-elevator li:last-child')[0]
         tabprice.click()
             // var port = chrome.runtime.connect({
@@ -95,7 +99,7 @@ window.onload = () => {
             pricetext.style.textAlign = "center"
             pricetext.style.fontSize = "30px"
 
-            pricetext.innerHTML = "请手动输入监听价格"
+            pricetext.innerHTML = stoptitle
             const startbuttonparent = $('#choose-btns')[0]
             const startbutton = document.createElement('button')
             const stopbutton = document.createElement('button')
@@ -117,7 +121,7 @@ window.onload = () => {
 
                 } else {
                     clearInterval(helper)
-                    pricetext.innerHTML = "请手动输入监听价格 并点击开始监听按钮"
+                    pricetext.innerHTML = stoptitle
                 }
             }
             startbutton.onclick = e => {
@@ -128,11 +132,12 @@ window.onload = () => {
                             getlocaldata({
                                 mydata1: null
                             }).then(res => {
-                                console.log(res)
+                                // console.log(res)
+                                console.log(res.mydata1.id)
                                 if (res.mydata1.id == itemid) {
                                     endtime = res.mydata1.endTime;
                                     startevent()
-                                    console.log(res.mydata1);
+
                                 } else {
                                     pricetext.innerHTML = "出错了   重新点击"
                                 }
@@ -155,12 +160,12 @@ window.onload = () => {
                 clearInterval(helper)
                 helper = null;
                 helper = setInterval(() => {
-                    tabdefault.click()
-                    tabprice.click()
-                    setTimeout(() => {
-                        setpricehelper()
+                    // tabdefault.click()
+                    // tabprice.click()
+                    // setTimeout(() => {
+                    setpricehelper()
 
-                    }, 100);
+                    // }, 100);
 
                 }, helperlooptime);
                 pricetext.innerHTML = "当前正在监听 可点击停止按钮停止监听"
@@ -191,12 +196,12 @@ window.onload = () => {
 
                     nowtime = new Date().getTime();
                     console.log(endtime - nowtime);
-                    if (endtime - nowtime > 11000) {
-                        helperlooptime = 8000
+                    if ((endtime - nowtime) / 6 > 1000) {
+                        helperlooptime = 4000
                         startevent()
                     } else if (helperlooptime > 500) {
 
-                        helperlooptime = 500
+                        helperlooptime = 460
                         startevent()
 
 
@@ -229,7 +234,7 @@ window.onload = () => {
                     let a4 = Math.floor($('.el-input__inner')[0]._value) <= itemprice
                     let a5 = Math.floor($('.el-input__inner')[0]._value) <= maxprice
 
-                    let a6 = endtime - nowtime < 1500;
+                    let a6 = endtime - nowtime < 1222;
                     let a7 = endtime - nowtime < 1;
 
 

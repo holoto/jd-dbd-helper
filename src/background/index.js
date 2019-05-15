@@ -19,7 +19,7 @@ import {
 } from '../contentScripts/com'
 
 // console.log(1)
-const localForage = mydbddata
+let localForage = mydbddata
 const category = `&category1=`
 let notificationtime;
 let taburl;
