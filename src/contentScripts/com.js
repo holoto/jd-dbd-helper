@@ -1,5 +1,5 @@
 import jsonp from 'jsonp'
-import "@babel/polyfill";
+// import "@babel/polyfill";
 import localForage from "localforage";
 localForage.config({
     name: 'I-heart-localStorage'

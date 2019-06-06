@@ -4,7 +4,7 @@
 import $ from "jquery";
 // import axios from 'axios';
 // import jsonp from 'jsonp';
-import "@babel/polyfill";
+// import "@babel/polyfill";
 import {
     getdbditem,
     closetab,

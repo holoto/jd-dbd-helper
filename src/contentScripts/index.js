@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 import './index.styl'
 import $ from "jquery";
-import "@babel/polyfill";
+// import "@babel/polyfill";
 import {
     notificationstime,
     getdbdlist,
@@ -53,21 +53,42 @@ window.onload = () => {
     // $('#app > div.list-selector > div > div.selector > div:nth-child(2) > div > div.sl-value > div > ul > li:nth-child(3) > a')[0].click()
     // console.log($('.current'))
     // console.log($('.sl-v-list li:last-child'))
-
+    var nhistory = window.history.length;
+    var currentpage = $('.number.active')[0].innerHTML
+    var npagesize = $('.el-pager')[0].childElementCount;
     let dbdnow = $('.db-state div:nth-child(3)')[0]
     let dbdlate = $('.db-state div:nth-child(5)')[0]
-    console.log(dbdnow)
-    console.log(dbdlate)
+        // console.log(dbdnow)
+        // console.log(dbdlate)
+        // console.log($('.number.active')[0].innerHTML)
     const reflashdata = () => {
         // dbdnow = $('.current')[1]
-        dbdlate.click();
+        nhistory = window.history.length;
+        npagesize = $('.el-pager')[0].childElementCount
+        currentpage = $('.number.active')[0].innerHTML
+        if (nhistory == 1) {
+
+            let apage = 0
+            currentpage < 2 ? apage = 1 : apage = 0;
+            npagesize > 1 ? $('.number')[apage].click() : dbdlate.click()
+        } else {
+            window.history.back()
+        }
         // $('.sl-v-list li:last-child')[0].click()
 
         setTimeout(() => {
             // $('.current')[0].click()
+            currentpage = $('.number.active')[0].innerHTML
+            nhistory = window.history.length;
+            npagesize = $('.el-pager')[0].childElementCount
+            if (nhistory == 1) {
+                let apage = 0
+                currentpage < 2 ? apage = 1 : apage = 0;
+                npagesize > 1 ? $('.number')[apage].click() : dbdlate.click()
+            } else {
+                window.history.forward()
+            }
 
-
-            dbdnow.click()
 
 
         }, 230)

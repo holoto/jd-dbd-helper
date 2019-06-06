@@ -1,6 +1,6 @@
 // import $ from "jquery";
 // import localForage from "localforage";
-import "@babel/polyfill";
+// import "@babel/polyfill";
 // console.log(chrome)
 // console.log(window)
 // console.log(this)
